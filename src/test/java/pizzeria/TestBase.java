@@ -24,13 +24,12 @@ public class TestBase {
         options.addArguments("--start-maximized");
         options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.IGNORE);
         browser = new ChromeDriver(options);
-        wait = new WebDriverWait(browser, Duration.ofSeconds(5));
-        browser.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        wait = new WebDriverWait(browser, Duration.ofSeconds(4));
+        browser.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
     }
 
     @AfterEach
     public void tearDown() throws IOException {
-
         try{
             takeScreenshot();
         } catch (UnhandledAlertException alertException) {
