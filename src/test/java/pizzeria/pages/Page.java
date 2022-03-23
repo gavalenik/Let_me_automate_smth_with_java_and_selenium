@@ -1,5 +1,6 @@
 package pizzeria.pages;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -10,6 +11,7 @@ public class Page {
 
     protected WebDriver browser;
     protected WebDriverWait wait;
+    protected JavascriptExecutor jsExecutor;
 
     protected Integer defaultTimeout = 4;
 

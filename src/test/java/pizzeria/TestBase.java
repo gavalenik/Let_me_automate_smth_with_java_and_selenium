@@ -17,6 +17,11 @@ public class TestBase {
     protected WebDriver browser;
     protected WebDriverWait wait;
 
+    protected String login = "regularUser";
+    protected String password = "Qazwsx1!";
+    protected String email = "banepa2647@f1xm.com";
+
+
     @BeforeEach
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", "drivers\\chromedriver.exe");
