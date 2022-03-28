@@ -13,6 +13,7 @@ public class Page {
     protected WebDriverWait wait;
     protected JavascriptExecutor jsExecutor;
 
+    private final String url = "http://pizzeria.skillbox.cc/";
     protected Integer defaultTimeout = 4;
 
 
@@ -20,6 +21,18 @@ public class Page {
         this.browser = browser;
         this.wait = wait;
         PageFactory.initElements(browser, this);
+    }
+
+    public void open() {
+        browser.get(getPageUrl());
+    }
+
+    protected String getPageUrl() {
+        return url + getPageSubUrl();
+    }
+
+    protected String getPageSubUrl() {
+        return "";
     }
 
     public void setTimeout(Integer timeout) {

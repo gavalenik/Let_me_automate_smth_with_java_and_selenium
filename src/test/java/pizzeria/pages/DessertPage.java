@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class DessertPage extends Page {
 
+    private final String subUrl = "product-category/menu/deserts/";
+
     @FindBy(css = "#primary h1")
     private WebElement itemTitle;
 
@@ -17,6 +19,11 @@ public class DessertPage extends Page {
         super(browser, wait);
         PageFactory.initElements(browser, this);
         jsExecutor = (JavascriptExecutor)browser;
+    }
+
+    @Override
+    protected String getPageSubUrl() {
+        return subUrl;
     }
 
     public String getItemTitle() {

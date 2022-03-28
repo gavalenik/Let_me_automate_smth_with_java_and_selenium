@@ -4,16 +4,15 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
+import static java.lang.String.format;
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOf;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class MainPage extends Page {
-
-    private final String url = "http://pizzeria.skillbox.cc/";
 
     public final By pizzaLocator = By.cssSelector("#product1 .slick-active");
     public final By dessertLocator = By.cssSelector("#product2 .slick-active");
@@ -21,7 +20,7 @@ public class MainPage extends Page {
     private final By addToBasketButtonLocator = By.cssSelector(".add_to_cart_button");
 
 
-    @FindBy(className = "account")
+    @FindBy(css = ".account")
     private WebElement inputLinkLocator;
 
     @FindBy(css = ".slick-next")
@@ -42,6 +41,18 @@ public class MainPage extends Page {
     @FindBy(css = "html")
     private WebElement page;
 
+    @FindBy(xpath = "//*[@id='menu']")
+    private WebElement menu;
+
+    @FindBy(css = "#menu-item-389")
+    private WebElement pointMenuOfMainMenu;
+
+    @FindBy(css = "#accesspress-breadcrumb .current")
+    private WebElement pageTitle;
+
+    @FindBy(css = ".accesspress-breadcrumb span")
+    private WebElement subCategoryPageTitle;
+
 
     public MainPage(WebDriver browser, WebDriverWait wait) {
         super(browser, wait);
@@ -49,21 +60,15 @@ public class MainPage extends Page {
         jsExecutor = (JavascriptExecutor)browser;
     }
 
-    public MainPage open() {
-        browser.get(url);
-        return this;
-    }
-
-    public MainPage waitForAllItemsLoaded(By item) {
+    public void waitForAllItemsLoaded(By item) {
         var qnt = browser.findElements(item).size();
         wait.until(visibilityOf(browser.findElements(item).get(qnt - 1)));
-        return this;
     }
 
     public void slidePizzasTo(WebElement element) {
         Actions action = new Actions(browser);
         action.moveToElement(element).click().perform();
-        wait.until(ExpectedConditions.invisibilityOf(sliderTransitionCondition));
+        wait.until(invisibilityOf(sliderTransitionCondition));
     }
 
     public String getPizzaTitleByIndex(Integer index) {
@@ -95,20 +100,36 @@ public class MainPage extends Page {
         browser.findElements(dessertLocator).get(index).click();
     }
 
-    public MainPage goToPageBottom() {
+    public void goToPageBottom() {
         for (var i = 0; i < 40; i++) {
             page.sendKeys(Keys.DOWN);
         }
-        return this;
     }
 
-    public MainPage clickSocialNetworkLink(String socialNetwork) {
-        var element = By.cssSelector(String.format("p a[href *= '%s']", socialNetwork));
+    public void clickSocialNetworkLink(String socialNetwork) {
+        var element = By.cssSelector(format("p a[href *= '%s']", socialNetwork));
         browser.findElement(element).click();
-        return this;
     }
 
-    public Integer getWindowsQuantity() {
+    public Integer getTabsQuantity() {
         return browser.getWindowHandles().size();
+    }
+
+    public void goToMenu(String menuItem) {
+        menu.findElement(By.xpath(format("//a[text()='%s']", menuItem))).click();
+    }
+
+    public void goToSubmenu(String menuItem) {
+        Actions action = new Actions(browser);
+        action.moveToElement(pointMenuOfMainMenu)
+                .moveToElement(browser.findElement(By.xpath(format("//a[text()='%s']", menuItem)))).click().perform();
+    }
+
+    public String getPageTitle_redirectViaMenu() {
+        return pageTitle.getText();
+    }
+
+    public String getPageTitle_redirectViaSubmenu() {
+        return subCategoryPageTitle.getText();
     }
 }
