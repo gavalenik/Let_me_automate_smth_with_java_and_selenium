@@ -11,6 +11,7 @@ public class BonusProgramPage extends Page {
 
     private final String subUrl = "bonus/";
 
+
     @FindBy(css = "#bonus_username")
     private WebElement bonusUsernameFieldLocator;
 
@@ -19,6 +20,12 @@ public class BonusProgramPage extends Page {
 
     @FindBy(css = "#bonus_main button")
     private WebElement submitButtonLocator;
+
+    @FindBy(css = "#bonus_main h3")
+    private WebElement bonusProgramTextLocator;
+
+    @FindBy(css = "#bonus_main #bonus_content")
+    private WebElement errorMessageFieldLocator;
 
 
     public BonusProgramPage(WebDriver browser, WebDriverWait wait) {
@@ -42,5 +49,13 @@ public class BonusProgramPage extends Page {
 
     public void clickSubmitButton() {
         submitButtonLocator.click();
+    }
+
+    public String getBonusProgramText() {
+        return bonusProgramTextLocator.getText();
+    }
+
+    public String getErrorMessageText() {
+        return errorMessageFieldLocator.getText();
     }
 }

@@ -14,6 +14,8 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class MainPage extends Page {
 
+    Actions action = new Actions(browser);
+
     public final By pizzaLocator = By.cssSelector("#product1 .slick-active");
     public final By dessertLocator = By.cssSelector("#product2 .slick-active");
     public final By beverageLocator = By.cssSelector("#accesspress_store_product-7 .slick-active");
@@ -24,10 +26,10 @@ public class MainPage extends Page {
     private WebElement inputLinkLocator;
 
     @FindBy(css = ".slick-next")
-    public WebElement slideRightLocator;
+    private WebElement slideRightLocator;
 
     @FindBy(css = ".slick-prev")
-    public WebElement slideLeftLocator;
+    private WebElement slideLeftLocator;
 
     @FindBy(css = "#product1 .slick-track[transition]")
     private WebElement sliderTransitionCondition;
@@ -65,14 +67,21 @@ public class MainPage extends Page {
         wait.until(visibilityOf(browser.findElements(item).get(qnt - 1)));
     }
 
-    public void slidePizzasTo(WebElement element) {
-        Actions action = new Actions(browser);
+    private void moveAndWait(WebElement element) {
         action.moveToElement(element).click().perform();
         wait.until(invisibilityOf(sliderTransitionCondition));
     }
 
-    public String getPizzaTitleByIndex(Integer index) {
-        return pizzaTitleLocator.get(index).getText();
+    public void oneTimeSlidePizzasToRight() {
+        moveAndWait(slideRightLocator);
+    }
+
+    public void oneTimeSlidePizzasToLeft() {
+        moveAndWait(slideLeftLocator);
+    }
+
+    public String getFirstPizzaTitle() {
+        return pizzaTitleLocator.get(0).getText();
     }
 
     public void scrollToSection(By item) {
@@ -80,7 +89,6 @@ public class MainPage extends Page {
     }
 
     public void moveCursorToFirstBeverage() {
-        Actions action = new Actions(browser);
         action.moveToElement(browser.findElement(beverageLocator)).perform();
     }
 
@@ -96,8 +104,8 @@ public class MainPage extends Page {
         return arrowUp.isDisplayed();
     }
 
-    public void clickDessertByIndex(Integer index) {
-        browser.findElements(dessertLocator).get(index).click();
+    public void clickFirstDessert() {
+        browser.findElements(dessertLocator).get(0).click();
     }
 
     public void goToPageBottom() {
@@ -120,7 +128,6 @@ public class MainPage extends Page {
     }
 
     public void goToSubmenu(String menuItem) {
-        Actions action = new Actions(browser);
         action.moveToElement(pointMenuOfMainMenu)
                 .moveToElement(browser.findElement(By.xpath(format("//a[text()='%s']", menuItem)))).click().perform();
     }

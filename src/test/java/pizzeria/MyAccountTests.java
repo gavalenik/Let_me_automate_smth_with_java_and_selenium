@@ -1,19 +1,14 @@
 package pizzeria;
 
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import pizzeria.pages.MyAccountPage;
 
 import static java.lang.System.getProperty;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class MyAccountTests extends TestBase {
 
     @Test
-    @Order(1)
     public void accountData_uploadAvatar_checkSuccessfulMessage() {
         var userLogin = "regularUser";
         var userPassword = "Qazwsx1!";

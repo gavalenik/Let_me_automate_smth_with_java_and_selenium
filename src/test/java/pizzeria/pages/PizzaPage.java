@@ -9,18 +9,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Comparator.reverseOrder;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOf;
 
 public class PizzaPage extends Page {
 
-    private final String subUrl = "product-category/menu/pizza/";
+    private final String subUrl = "product-category/menu/pizza/?orderby=popularity";
 
     private final By priceLocator = By.cssSelector("bdi");
     private final By addToCartButtonLocator = By.cssSelector(".add_to_cart_button");
     private final By loaderLocator = By.cssSelector(".loading");
-
-    @FindBy(css = "#primary h1")
-    private WebElement itemTitleLocator;
 
     @FindBy(css = ".ui-slider-handle:nth-of-type(1)")
     private WebElement leftPriceSliderLocator;
@@ -66,7 +64,7 @@ public class PizzaPage extends Page {
         rightPriceSliderLocator.sendKeys(Keys.LEFT);
     }
 
-    public void clickButtonSubmit() {
+    public void applyPriceFilter() {
         priceSliderButtonSubmitLocator.click();
     }
 
@@ -74,7 +72,7 @@ public class PizzaPage extends Page {
         return pizzaItem.size();
     }
 
-    public void sortingByValue(String value) {
+    public void sortingItemsByValue(String value) {
         new Select(sortingFieldLocator).selectByVisibleText(value);
     }
 
@@ -87,9 +85,13 @@ public class PizzaPage extends Page {
         return pizzasPriceList;
     }
 
-    public void addPizzaToBasketByIndex(Integer index) {
-        pizzaItem.get(index).findElement(addToCartButtonLocator).click();
-        wait.until(invisibilityOf(pizzaItem.get(index).findElement(loaderLocator)));
+    public void sortListHighToLow(List<Double> list) {
+        list.sort(reverseOrder());
+    }
+
+    public void addFirstPizzaToBasket() {
+        pizzaItem.get(0).findElement(addToCartButtonLocator).click();
+        wait.until(invisibilityOf(pizzaItem.get(0).findElement(loaderLocator)));
     }
 
     public void clickCartButton() {

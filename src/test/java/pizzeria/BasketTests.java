@@ -17,7 +17,6 @@ public class BasketTests extends TestBase {
     public void increaseItemQuantityInBasket_totalAmountIsChanged() {
 
         var basketPage = openPizzasPage_addPizzaToCart_goToCart();
-
         var quantityBeforeChange = basketPage.getItemQuantity();
         var amountBeforeChange = basketPage.getTotalAmount();
         basketPage.increaseQuantityByOne();
@@ -36,7 +35,6 @@ public class BasketTests extends TestBase {
     public void reduceItemQuantityInBasket_basketIsEmpty() {
 
         var basketPage = openPizzasPage_addPizzaToCart_goToCart();
-
         basketPage.reduceQuantityByOne();
         basketPage.updateBasket();
 
@@ -49,7 +47,6 @@ public class BasketTests extends TestBase {
     public void applyCouponInBasket_couponIsNotFound() {
 
         var basketPage = openPizzasPage_addPizzaToCart_goToCart();
-
         basketPage.inputCoupon("promo");
         basketPage.applyCoupon();
 
@@ -61,7 +58,7 @@ public class BasketTests extends TestBase {
 
         var page = new PizzaPage(browser, wait);
         page.open();
-        page.addPizzaToBasketByIndex(0);
+        page.addFirstPizzaToBasket();
         page.clickCartButton();
         return new BasketPage(browser, wait);
     }

@@ -1,6 +1,9 @@
 package pizzeria;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -23,10 +26,10 @@ public class MainPageTests extends TestBase {
         var page = new MainPage(browser, wait);
         page.open();
         page.waitForAllItemsLoaded(page.pizzaLocator);
-        var defaultFirstPizzaTitle = page.getPizzaTitleByIndex(0);
-        page.slidePizzasTo(page.slideRightLocator);
+        var defaultFirstPizzaTitle = page.getFirstPizzaTitle();
+        page.oneTimeSlidePizzasToRight();
 
-        assertNotEquals(defaultFirstPizzaTitle, page.getPizzaTitleByIndex(0),
+        assertNotEquals(defaultFirstPizzaTitle, page.getFirstPizzaTitle(),
                 "Slide pizzas to right is not working");
     }
 
@@ -37,10 +40,10 @@ public class MainPageTests extends TestBase {
         var page = new MainPage(browser, wait);
         page.open();
         page.waitForAllItemsLoaded(page.pizzaLocator);
-        var defaultFirstPizzaTitle = page.getPizzaTitleByIndex(0);
-        page.slidePizzasTo(page.slideLeftLocator);
+        var defaultFirstPizzaTitle = page.getFirstPizzaTitle();
+        page.oneTimeSlidePizzasToLeft();
 
-        assertNotEquals(defaultFirstPizzaTitle, page.getPizzaTitleByIndex(0),
+        assertNotEquals(defaultFirstPizzaTitle, page.getFirstPizzaTitle(),
                 "Slide pizzas to left is not working");
     }
 
@@ -69,7 +72,7 @@ public class MainPageTests extends TestBase {
         page.open();
         page.scrollToSection(page.dessertLocator);
         page.waitForAllItemsLoaded(page.dessertLocator);
-        page.clickDessertByIndex(0);
+        page.clickFirstDessert();
         var itemPage = new DessertPage(browser, wait);
 
         assertEquals("Десерт «Булочка с корицей»", itemPage.getItemTitle(),

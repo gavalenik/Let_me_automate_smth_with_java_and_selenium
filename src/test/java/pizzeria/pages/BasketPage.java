@@ -38,7 +38,10 @@ public class BasketPage extends Page {
     private WebElement basketIsEmptyTitleLocator;
 
     @FindBy(css = ".blockUI")
-    private List<WebElement> loader;
+    private List<WebElement> loaderLocator;
+
+    @FindBy(css = ".checkout-button")
+    private WebElement checkoutButtonLocator;
 
 
     public BasketPage(WebDriver browser, WebDriverWait wait) {
@@ -61,7 +64,7 @@ public class BasketPage extends Page {
 
     public void updateBasket() {
         updateBasketButtonLocator.click();
-        wait.until(ExpectedConditions.invisibilityOfAllElements(loader));
+        wait.until(ExpectedConditions.invisibilityOfAllElements(loaderLocator));
     }
 
     public String getItemQuantity() {
@@ -86,5 +89,9 @@ public class BasketPage extends Page {
 
     public String getCouponErrorText() {
         return couponErrorLocator.getText();
+    }
+
+    public void clickCheckoutButton() {
+        checkoutButtonLocator.click();
     }
 }

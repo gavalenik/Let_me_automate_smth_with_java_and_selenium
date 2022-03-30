@@ -16,6 +16,7 @@ public class TestBase {
 
     protected WebDriver browser;
     protected WebDriverWait wait;
+    protected Integer defaultTimeout = 4;
 
 
     @BeforeEach
@@ -25,8 +26,8 @@ public class TestBase {
         options.addArguments("--start-maximized");
         options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.IGNORE);
         browser = new ChromeDriver(options);
-        wait = new WebDriverWait(browser, Duration.ofSeconds(4));
-        browser.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
+        wait = new WebDriverWait(browser, Duration.ofSeconds(defaultTimeout));
+        browser.manage().timeouts().implicitlyWait(Duration.ofSeconds(defaultTimeout));
     }
 
     @AfterEach
@@ -44,5 +45,9 @@ public class TestBase {
     private void takeScreenshot() throws IOException {
         var sourceFile = ((TakesScreenshot) browser).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(sourceFile, new File("c:\\tmp\\screenshot.png"));
+    }
+
+    public void setTimeout(Integer timeout) {
+        browser.manage().timeouts().implicitlyWait(Duration.ofSeconds(timeout));
     }
 }
