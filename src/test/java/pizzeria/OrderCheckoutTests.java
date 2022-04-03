@@ -16,6 +16,9 @@ public class OrderCheckoutTests extends TestBase {
 
     @Test
     @Order(1)
+    /*Авторизация, добавление пиццы в корзину, переход к оформлению заказа, ввод персональных данных
+      выбор оплаты наличкой, принятие соглашений, размещение заказа
+      Проверка отображения сообщения "Заказ получен" */
     public void createOrderWithPaymentByCash() {
 
         var checkoutPage = authorization_addPizzaToCart_goToCart_StartCheckout_inputCustomerData();
@@ -29,11 +32,15 @@ public class OrderCheckoutTests extends TestBase {
 
     @Test
     @Order(2)
+    /*Авторизация, добавление пиццы в корзину, переход к оформлению заказа, ввод персональных данных
+      ввод даты заказа - завтрашний день, ввод комментария, выбор оплаты через банковский перевод,
+      принятие соглашений, размещение заказа
+      Проверка отображения сообщения "Заказ получен" */
     public void createOrderWithPaymentByBankTransfer_orderDateAndOrderComment() {
 
         var checkoutPage = authorization_addPizzaToCart_goToCart_StartCheckout_inputCustomerData();
         checkoutPage.inputOrderDateWithTomorrowDate();
-        checkoutPage.inputOrderComment("Just comment");
+        checkoutPage.inputOrderComment("Just a comment");
         checkoutPage.choosePaymentByBankTransfer();
         checkoutPage.acceptTerms();
         checkoutPage.placeOrder();
@@ -42,6 +49,8 @@ public class OrderCheckoutTests extends TestBase {
                 "Order hasn't been confirmed");
     }
 
+    /*Метод - прекондишн для тестов оформления заказов
+      Авторизация, добавление пиццы в корзину, переход к оформлению заказа, ввод персональных данных */
     public OrderCheckoutPage authorization_addPizzaToCart_goToCart_StartCheckout_inputCustomerData() {
         var userLogin = "regularUser";
         var userPassword = "Qazwsx1!";

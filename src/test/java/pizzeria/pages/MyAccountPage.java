@@ -5,7 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class MyAccountPage extends Page {
 
@@ -20,8 +23,11 @@ public class MyAccountPage extends Page {
     @FindBy(css = ".woocommerce-button")
     private WebElement submitButtonLocator;
 
-    @FindBy(css = ".woocommerce-MyAccount-navigation-link--edit-account")
+    @FindBy(css = ".woocommerce-MyAccount-navigation-link--edit-account > a")
     private WebElement accountDataButtonLocator;
+
+    @FindBy(css = ".woocommerce-MyAccount-navigation-link--customer-logout > a")
+    private WebElement logoutButtonLocator;
 
     @FindBy(css = "#uploadFile")
     private WebElement uploadAvatarLocator;
@@ -31,6 +37,9 @@ public class MyAccountPage extends Page {
 
     @FindBy(css = ".woocommerce-message")
     private WebElement messageFieldLocator;
+
+    @FindBy(css = ".login-woocommerce")
+    private WebElement loginLogoutLinkLocator;
 
 
     public MyAccountPage(WebDriver browser, WebDriverWait wait) {
@@ -60,6 +69,11 @@ public class MyAccountPage extends Page {
         accountDataButtonLocator.click();
     }
 
+    public void clickLogoutButton() {
+        logoutButtonLocator.click();
+        wait.until(visibilityOf(loginFieldLocator));
+    }
+
     public void uploadAvatar(String pathToPicture) {
         uploadAvatarLocator.sendKeys(pathToPicture);
     }
@@ -70,5 +84,9 @@ public class MyAccountPage extends Page {
 
     public String getMessage() {
         return messageFieldLocator.getText();
+    }
+
+    public String getLoginLogoutLinkLocator() {
+        return loginLogoutLinkLocator.getText();
     }
 }

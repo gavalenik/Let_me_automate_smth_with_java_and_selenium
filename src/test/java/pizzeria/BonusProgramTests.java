@@ -14,6 +14,9 @@ public class BonusProgramTests extends TestBase {
 
     @Test
     @Order(1)
+    /*Открытие страницы бонусная программа, ввод имени и номера телефона, нажатие кнопки "Оформить карту"
+      копирование текста из алерта и нажатие кнопки "Ок" в алерте, установка таймута 8 сек. (лоадер)
+      Проверка, что текст алерта верный и надпись "Ваша карта оформлена!" отобразилась */
     public void bonusProgram_positiveCase() {
         var bonusUsername = "Stepan";
         var bonusPhoneNumber = "89801234567";
@@ -38,6 +41,8 @@ public class BonusProgramTests extends TestBase {
 
     @Test
     @Order(2)
+    /*Открытие страницы бонусная программа, поля остаются пустыми, нажатие кнопки "Оформить карту"
+      Проверка текста ошибки */
     public void bonusProgram_emptyFields_checkErrorMessage() {
 
         var page = new BonusProgramPage(browser, wait);
@@ -50,6 +55,8 @@ public class BonusProgramTests extends TestBase {
 
     @Test
     @Order(3)
+    /*Открытие страницы бонусная программа, ввод имени и некорректного номера телефона, нажатие кнопки "Оформить карту"
+      Проверка текста ошибки */
     public void bonusProgram_wrongPhoneFormat_checkErrorMessage() {
         var bonusUsername = "Stepan";
         var bonusPhoneNumber = "555";

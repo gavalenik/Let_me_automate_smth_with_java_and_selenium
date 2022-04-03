@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
 
 import static java.lang.String.format;
+import static org.openqa.selenium.Keys.ENTER;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOf;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
@@ -20,10 +21,6 @@ public class MainPage extends Page {
     public final By dessertLocator = By.cssSelector("#product2 .slick-active");
     public final By beverageLocator = By.cssSelector("#accesspress_store_product-7 .slick-active");
     private final By addToBasketButtonLocator = By.cssSelector(".add_to_cart_button");
-
-
-    @FindBy(css = ".account")
-    private WebElement inputLinkLocator;
 
     @FindBy(css = ".slick-next")
     private WebElement slideRightLocator;
@@ -38,7 +35,7 @@ public class MainPage extends Page {
     private List<WebElement> pizzaTitleLocator;
 
     @FindBy(css = "div#ak-top")
-    private WebElement arrowUp;
+    private WebElement arrowUpLocator;
 
     @FindBy(css = "html")
     private WebElement page;
@@ -54,6 +51,12 @@ public class MainPage extends Page {
 
     @FindBy(css = ".accesspress-breadcrumb span")
     private WebElement subCategoryPageTitle;
+
+    @FindBy(css = ".search-field")
+    private WebElement searchFieldLocator;
+
+    @FindBy(css = ".product_title")
+    private WebElement itemTitleLocator;
 
 
     public MainPage(WebDriver browser, WebDriverWait wait) {
@@ -101,7 +104,7 @@ public class MainPage extends Page {
     }
 
     public Boolean arrowUpIsDisplayed() {
-        return arrowUp.isDisplayed();
+        return arrowUpLocator.isDisplayed();
     }
 
     public void clickFirstDessert() {
@@ -138,5 +141,15 @@ public class MainPage extends Page {
 
     public String getPageTitle_redirectViaSubmenu() {
         return subCategoryPageTitle.getText();
+    }
+
+    public void searchFor(String item) {
+        searchFieldLocator.sendKeys(item);
+        searchFieldLocator.sendKeys(ENTER);
+        wait.until(visibilityOf(itemTitleLocator));
+    }
+
+    public Boolean itemTitlesContainsSearchItem(String item) {
+        return itemTitleLocator.getText().toLowerCase().contains(item.toLowerCase());
     }
 }

@@ -14,6 +14,8 @@ public class PizzaPageTests extends TestBase {
 
     @Test
     @Order(1)
+    /*Открытие страницы с пиццами, применение сортировки цена по возрастанию
+      Проверка через список - каждый след элемент списка больше или равен предыдущему */
     public void pizzasSortingByPriceLowToHigh() {
 
         var page = new PizzaPage(browser, wait);
@@ -29,6 +31,8 @@ public class PizzaPageTests extends TestBase {
 
     @Test
     @Order(2)
+    /*Открытие страницы с пиццами, применение сортировки цена по убыванию
+      Проверка через сравнение списков - список до применения сортировки сортируем через list.sort() */
     public void pizzasSortingByPriceHighToLow() {
 
         var page = new PizzaPage(browser, wait);
@@ -44,6 +48,8 @@ public class PizzaPageTests extends TestBase {
 
     @Test
     @Order(3)
+    /*Открытие страницы с пиццами, двигаем левый бегунок вправо на 1 деление, правый бегунок влево на 1 деление
+      Проверка, что количесто элементов до применения фильтра не равно количество после */
     public void filterPizzasByPriceSlider() {
 
         var page = new PizzaPage(browser, wait);
@@ -60,6 +66,8 @@ public class PizzaPageTests extends TestBase {
 
     @Test
     @Order(4)
+    /*Открытие страницы с пиццами, нажатие по кнопке "В корзину" под первой пиццей, переход в корзину
+      Проверка, что в корзине есть продукты */
     public void addPizzaToCart() {
 
         var page = new PizzaPage(browser, wait);
